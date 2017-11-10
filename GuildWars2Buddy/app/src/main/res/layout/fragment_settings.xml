@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="wbeck.guildwars2buddy.SettingsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/apiKeyValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="215dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@string/apikey" />
+
+        <Button
+            android:id="@+id/UpdateApiKey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/apiKeyValue"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:onClick="saveApiKey"
+            android:text="@string/update_api_Btn" />
+    </RelativeLayout>
+
+</FrameLayout>
