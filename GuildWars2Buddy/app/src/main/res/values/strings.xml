@@ -10,6 +10,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
+    <!-- Navigation Drawer -->
+    <string name="username">Username#7623</string>
+
+
     <!-- Settings Fragment Strings -->
     <string name="apikey">Api-Key Here</string>
     <string name="update_api_Btn">Save key</string>
