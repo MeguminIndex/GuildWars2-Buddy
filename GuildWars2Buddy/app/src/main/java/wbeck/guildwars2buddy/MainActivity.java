@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 //https://romannurik.github.io/AndroidAssetStudio/index.html
 
@@ -72,26 +73,38 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        UserData.apiKey = userData.getString("key","");
 
 
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected())
-        {
-          //  new DownloadImageTask(IM).execute(src);
 
-        }
 
-    Storage.writeTxtFile("test","testData", getApplicationContext());
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                //  new DownloadImageTask(IM).execute(src);
 
-        String temp;
 
-        temp = Storage.openTxtFile("test",getApplicationContext());
+                TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
+                if(accoutTV != null)
+                new Gw2APIParseJson(accoutTV).execute("https://api.guildwars2.com/v2/account");
 
-        int i =0;
+            }
+
+
+        //Storage.writeTxtFile("test","testData", getApplicationContext());
+
+        //String temp;
+
+        //temp = Storage.openTxtFile("test",getApplicationContext());
 
 
     }
+
+
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -107,6 +120,20 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+        {
+            //  new DownloadImageTask(IM).execute(src);
+
+
+
+            TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
+            new Gw2APIParseJson(accoutTV).execute("https://api.guildwars2.com/v2/account");
+
+        }
+
         return true;
     }
 
@@ -210,11 +237,12 @@ public class MainActivity extends AppCompatActivity
     public void saveApiKey(View view)
     {
         EditText edTxt = (EditText) findViewById(R.id.apiKeyValue);
-
         SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = userData.edit();
         editor.putString("key", edTxt.getText().toString());
         editor.commit();
+
+        UserData.apiKey = edTxt.getText().toString();
 
     }
 

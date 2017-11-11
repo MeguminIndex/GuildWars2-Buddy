@@ -79,8 +79,7 @@ public class SettingsFragment extends Fragment {
 
         //update the apikey box with the apikey
         EditText edTxt = (EditText) getView().findViewById(R.id.apiKeyValue);
-        SharedPreferences userData = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
-        edTxt.setText(userData.getString("key",""));
+        edTxt.setText(UserData.apiKey);
 
     }
 
