@@ -1,4 +1,4 @@
-package wbeck.guildwars2buddy;
+package wbeck.guildwars2buddy.Gw2_API;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
@@ -7,12 +7,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import wbeck.guildwars2buddy.UserData;
+import wbeck.guildwars2buddy.httpConnect;
+
 
 /**
  * Created by Index on 11/11/2017.
  */
 
-public class Gw2APIParseJson extends AsyncTask<String, String, String>{
+public class Gw2AccoutJsonParse extends AsyncTask<String, String, String>{
 
     final String TAG = "JsonParser.java";
 
@@ -22,7 +25,7 @@ public class Gw2APIParseJson extends AsyncTask<String, String, String>{
 
     TextView textView;
 
-    Gw2APIParseJson(TextView view)
+    public Gw2AccoutJsonParse(TextView view)
     {
         textView = view;
     }
@@ -39,7 +42,7 @@ public class Gw2APIParseJson extends AsyncTask<String, String, String>{
               //      .openConnection();
 
             httpConnect jParser = new httpConnect();
-            String json = jParser.getJSONFromUrl(apiCall+authPrefix+UserData.apiKey);
+            String json = jParser.getJSONFromUrl(apiCall+authPrefix+ UserData.apiKey);
 
             JSONObject accout = new JSONObject(json);
 

@@ -1,4 +1,4 @@
-package wbeck.guildwars2buddy;
+package wbeck.guildwars2buddy.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,6 +7,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import wbeck.guildwars2buddy.R;
 
 
 /**
