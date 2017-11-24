@@ -6,6 +6,9 @@
 
     <string name="action_settings">Settings</string>
 
+
+    <string name="noConnection">No internet Connection detected</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -17,5 +20,12 @@
     <!-- Settings Fragment Strings -->
     <string name="apikey">Api-Key Here</string>
     <string name="update_api_Btn">Save key</string>
+
+
+    <!-- Account Fragment Strings -->
+    <string name="fractal_lvl_lable">Fractal Level: </string>
+    <string name="daily_ap_lable">Daily AP: </string>
+    <string name="monthly_ap_lable">Monthly AP: </string>
+    <string name="wvw_rank_lable"> WvW Rank: </string>
 
 </resources>

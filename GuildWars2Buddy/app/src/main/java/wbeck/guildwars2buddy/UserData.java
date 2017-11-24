@@ -11,6 +11,7 @@ public class UserData {
     public static String id;
     public static String name;
     public static int world;
+    public static String world_name = null;
     public static String[] guilds;
     public static String[] access;
 

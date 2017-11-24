@@ -22,10 +22,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import wbeck.guildwars2buddy.Fragments.AccountFragment;
+import wbeck.guildwars2buddy.Fragments.DailyFragment;
 import wbeck.guildwars2buddy.Fragments.HomeFragment;
 import wbeck.guildwars2buddy.Fragments.SettingsFragment;
 import wbeck.guildwars2buddy.Gw2_API.Gw2AccoutJsonParse;
+import wbeck.guildwars2buddy.Gw2_API.Gw2WorldJsonParse;
 
 //https://romannurik.github.io/AndroidAssetStudio/index.html
 
@@ -37,7 +41,8 @@ public class MainActivity extends AppCompatActivity
 
     HomeFragment homefragment = null;
     SettingsFragment settingfragment = null;
-
+    DailyFragment dailyFragment = null;
+    AccountFragment accountFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,17 +81,23 @@ public class MainActivity extends AppCompatActivity
 
 
 
-            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()) {
-                //  new DownloadImageTask(IM).execute(src);
-
-
-                TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
-                if(accoutTV != null)
-                new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
-
-            }
+//            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+//            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+//            if (networkInfo != null && networkInfo.isConnected()) {
+//                //  new DownloadImageTask(IM).execute(src);
+//
+//
+//                TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
+//                if(accoutTV != null)
+//                new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
+//
+//            }
+//            else
+//            {
+//                String msg = getResources().getString(R.string.noConnection);
+//                Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+//
+//            }
 
 
         //Storage.writeTxtFile("test","testData", getApplicationContext());
@@ -118,16 +129,22 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
+
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected())
-        {
+        if (networkInfo != null && networkInfo.isConnected()) {
             //  new DownloadImageTask(IM).execute(src);
 
 
-
             TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
-            new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
+            if(accoutTV != null)
+                new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
+
+        }
+        else
+        {
+            String msg = getResources().getString(R.string.noConnection);
+            Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
 
         }
 
@@ -183,9 +200,47 @@ public class MainActivity extends AppCompatActivity
                 }
             }
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_dailys) {
+            if (dailyFragment != null) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.details, dailyFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else
+            {
+                dailyFragment = new DailyFragment().newInstance(1);
 
-        } else if (id == R.id.nav_slideshow) {
+                if (dailyFragment != null) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.details, dailyFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
+        } else if (id == R.id.nav_account) {
+
+            if (accountFragment != null) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.details, accountFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else
+            {
+                accountFragment = new AccountFragment().newInstance("d", "d");
+
+                if (homefragment != null) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.details, accountFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
 
         } else if (id == R.id.nav_settings) {
 
@@ -212,7 +267,10 @@ public class MainActivity extends AppCompatActivity
                 }
             }
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_Reminders) {
+
+
+
 
         } else if (id == R.id.nav_send) {
 
@@ -240,6 +298,27 @@ public class MainActivity extends AppCompatActivity
         editor.commit();
 
         UserData.apiKey = edTxt.getText().toString();
+
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            //  new DownloadImageTask(IM).execute(src);
+
+
+            TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
+            if(accoutTV != null)
+                new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
+
+
+
+
+        }
+        else
+        {
+            String msg = getResources().getString(R.string.noConnection);
+            Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
+
+        }
 
     }
 
