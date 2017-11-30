@@ -1,6 +1,8 @@
 package wbeck.guildwars2buddy.Gw2_API;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,8 +11,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import wbeck.guildwars2buddy.DailyItemArrayAdapter;
 import wbeck.guildwars2buddy.Structures.DailyListItem;
-import wbeck.guildwars2buddy.UserData;
+import wbeck.guildwars2buddy.Structures.DailyLists;
 import wbeck.guildwars2buddy.httpConnect;
 
 /**
@@ -26,11 +29,16 @@ public class Gw2DailyJsonParse extends AsyncTask<String, String, String>
         // this method is used for set up (UI)
         protected void onPreExecute() {}
 
+        Context context;
         DailyLists dailyLists;
 
-        Gw2DailyJsonParse(DailyLists listsIn)
+        ListView pve;
+
+        public Gw2DailyJsonParse(Context context, DailyLists listsIn, ListView pveList)
         {
+            this.context = context;
             dailyLists = listsIn;
+            pve = pveList;
         }
 
         private String authPrefix ="?access_token=";
@@ -71,10 +79,21 @@ public class Gw2DailyJsonParse extends AsyncTask<String, String, String>
             return tmpArry;
         }
 
-        private List<DailyListItem> JsonDailyArrayToDailyList(JSONArray jArray)
-        {
-            List<DailyListItem> tmpList = new ArrayList<DailyListItem>();
+        private ArrayList<DailyListItem> JsonDailyArrayToDailyList(JSONArray jArray) throws JSONException {
+            ArrayList<DailyListItem> tmpList = new ArrayList<DailyListItem>();
 
+            for (int i = 0; i < jArray.length()-1; i++) {
+
+                JSONObject item = jArray.getJSONObject(i);
+
+                int id =  item.getInt("id");
+
+                DailyListItem dailyItem = new DailyListItem();
+                dailyItem.id = id;
+
+
+                tmpList.add(dailyItem);
+            }
 
 
 
@@ -84,6 +103,9 @@ public class Gw2DailyJsonParse extends AsyncTask<String, String, String>
 
     protected void onPostExecute(String result) {
         //textView.setText(UserData.name.toString());
+
+        DailyItemArrayAdapter adapter = new DailyItemArrayAdapter(context,dailyLists.pve);
+        pve.setAdapter(adapter);
     }
 
 

@@ -29,7 +29,6 @@ import wbeck.guildwars2buddy.Fragments.DailyFragment;
 import wbeck.guildwars2buddy.Fragments.HomeFragment;
 import wbeck.guildwars2buddy.Fragments.SettingsFragment;
 import wbeck.guildwars2buddy.Gw2_API.Gw2AccoutJsonParse;
-import wbeck.guildwars2buddy.Gw2_API.Gw2WorldJsonParse;
 
 //https://romannurik.github.io/AndroidAssetStudio/index.html
 
@@ -137,7 +136,7 @@ public class MainActivity extends AppCompatActivity
 
 
             TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
-            if(accoutTV != null)
+            if(accoutTV != null && !UserData.apiKey.isEmpty())
                 new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
 
         }
@@ -210,7 +209,7 @@ public class MainActivity extends AppCompatActivity
             }
             else
             {
-                dailyFragment = new DailyFragment().newInstance(1);
+                dailyFragment = new DailyFragment().newInstance();
 
                 if (dailyFragment != null) {
                     FragmentManager fragmentManager = getFragmentManager();
