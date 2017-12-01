@@ -12,24 +12,35 @@
 
         <EditText
             android:id="@+id/apiKeyValue"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="215dp"
+            android:layout_marginTop="201dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/apikey" />
+            android:text="@string/apikey"
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/UpdateApiKey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/apiKeyValue"
+            android:layout_below="@+id/apiKeyValue"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="13dp"
             android:onClick="saveApiKey"
             android:text="@string/update_api_Btn" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/UpdateApiKey"
+            android:layout_alignStart="@+id/apiKeyValue"
+            android:layout_marginBottom="81dp"
+            android:text="Please save your api key below, this will be required for several bit of functionality in the app"
+            android:textAlignment="center" />
     </RelativeLayout>
 
 </FrameLayout>

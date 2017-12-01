@@ -101,7 +101,7 @@ public class AccountFragment extends Fragment {
             accountname.setText(UserData.name);
         }
         TextView world = (TextView) getView().findViewById(R.id.account_world);
-        if(UserData.world_name == null || !UserData.world_name.isEmpty()) {
+        if(!UserData.world_name.isEmpty()) {
 
             ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();

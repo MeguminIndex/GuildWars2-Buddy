@@ -7,24 +7,30 @@
 
     <TextView
         android:id="@+id/dailyName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:padding="2dp"
-        android:text="TextView" />
+        android:text="testing alot of text"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/dailyDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_alignEnd="@+id/dailyName"
-        android:layout_below="@+id/dailyName" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/dailyName"
+        android:text="testing alot of texttesting alot of text"
+        android:textSize="10sp"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/dailyRequirements"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/dailyDescription"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/dailyDescription"
-        android:text="TextView" />
+        android:layout_marginTop="11dp"
+        android:text="testing alot of texttesting alot of texttesting alot of texttesting alot of texttesting alot of texttesting alot of texttesting alot of texttesting alot of texttesting alot of text"
+        android:textSize="13sp" />
 </RelativeLayout>
