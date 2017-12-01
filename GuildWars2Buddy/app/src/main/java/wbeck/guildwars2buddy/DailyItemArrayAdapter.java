@@ -30,12 +30,14 @@ public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(getContext()).inflate(R.layout.daily_item, parent, false);
         }
 
-        TextView id = (TextView) convertView.findViewById(R.id.dailyID);
+        TextView name = (TextView) convertView.findViewById(R.id.dailyName);
+        TextView desc = (TextView) convertView.findViewById(R.id.dailyDescription);
+        TextView req = (TextView) convertView.findViewById(R.id.dailyRequirements);
 
 
-
-        id.setText(String.valueOf(item.id));
-
+        name.setText(item.name);
+        desc.setText(item.description);
+        req.setText(item.requirements);
 
         return convertView;
 

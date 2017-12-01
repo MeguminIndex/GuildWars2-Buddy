@@ -6,19 +6,19 @@ package wbeck.guildwars2buddy;
 
 public class UserData {
 
-    public static String apiKey;
+    public static String apiKey ="";
 
-    public static String id;
-    public static String name;
-    public static int world;
-    public static String world_name = null;
-    public static String[] guilds;
-    public static String[] access;
+    public static String id = "";
+    public static String name = "";
+    public static int world =-1;
+    public static String world_name = "";
+    public static String[] guilds = null;
+    public static String[] access = null;
 
-    public static int fractal_level;
-    public static int daily_ap;
-    public static int monthly_ap;
-    public static int wvw_rank;
+    public static int fractal_level =-1;
+    public static int daily_ap =-1;
+    public static int monthly_ap =-1;
+    public static int wvw_rank =-1;
 
 
 }

@@ -61,6 +61,22 @@ public class Gw2DailyJsonParse extends AsyncTask<String, String, String>
 
             dailyLists.pve = JsonDailyArrayToDailyList(pveJArray);
 
+           for(int i = 0; i < dailyLists.pve.size(); i++)
+           {
+
+               DailyListItem item  = dailyLists.pve.get(i);
+
+               String jsonTmp = jParser.getJSONFromUrl("https://api.guildwars2.com/v2/achievements/"+ String.valueOf(item.id));
+               JSONObject dailyItem = new JSONObject(json);
+
+               item.name = dailyItem.getString("name");
+               item.description = dailyItem.getString("description");
+               item.requirements = dailyItem.getString("requirement");
+
+               dailyLists.pve.set(i,item);
+
+
+           }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -90,6 +106,14 @@ public class Gw2DailyJsonParse extends AsyncTask<String, String, String>
 
                 DailyListItem dailyItem = new DailyListItem();
                 dailyItem.id = id;
+
+                httpConnect jParser = new httpConnect();
+                String jsonTmp = jParser.getJSONFromUrl("https://api.guildwars2.com/v2/achievements/"+ String.valueOf(dailyItem.id));
+                JSONObject jObhDaily = new JSONObject(jsonTmp);
+
+                dailyItem.name = jObhDaily.getString("name");
+                dailyItem.description = jObhDaily.getString("description");
+                dailyItem.requirements = jObhDaily.getString("requirement");
 
 
                 tmpList.add(dailyItem);

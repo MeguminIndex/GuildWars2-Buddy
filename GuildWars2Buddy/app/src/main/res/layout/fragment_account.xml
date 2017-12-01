@@ -99,6 +99,15 @@
             android:layout_alignEnd="@+id/fractal_level"
             android:layout_alignTop="@+id/textView10"
             android:text="N/A" />
+
+        <ListView
+            android:id="@+id/accessContentList"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignStart="@+id/textView10"
+            android:layout_below="@+id/textView10"
+            android:layout_marginTop="34dp" />
+
     </RelativeLayout>
 
 </FrameLayout>

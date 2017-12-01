@@ -8,11 +8,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.util.AndroidException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import wbeck.guildwars2buddy.Gw2_API.Gw2WorldJsonParse;
 import wbeck.guildwars2buddy.R;
@@ -89,11 +95,13 @@ public class AccountFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         //update the apikey box with the apikey
-        TextView accountname = (TextView) getView().findViewById(R.id.acount_name_frag);
-        accountname.setText(UserData.name);
 
+        if(!UserData.name.isEmpty()) {
+            TextView accountname = (TextView) getView().findViewById(R.id.acount_name_frag);
+            accountname.setText(UserData.name);
+        }
         TextView world = (TextView) getView().findViewById(R.id.account_world);
-        if(UserData.world_name == null || UserData.world_name.isEmpty()) {
+        if(UserData.world_name == null || !UserData.world_name.isEmpty()) {
 
             ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -109,18 +117,32 @@ public class AccountFragment extends Fragment {
         else
         world.setText(String.valueOf(UserData.world_name));
 
-        TextView fractalLvL = (TextView) getView().findViewById(R.id.fractal_level);
-        fractalLvL.setText(String.valueOf(UserData.fractal_level));
+            if(UserData.fractal_level != -1) {
+                TextView fractalLvL = (TextView) getView().findViewById(R.id.fractal_level);
+                fractalLvL.setText(String.valueOf(UserData.fractal_level));
+            }
+            if(UserData.wvw_rank != -1) {
+                TextView wvwRank = (TextView) getView().findViewById(R.id.wvw_rank);
+                wvwRank.setText(String.valueOf(UserData.wvw_rank));
+            }
 
-        TextView wvwRank = (TextView) getView().findViewById(R.id.wvw_rank);
-        wvwRank.setText(String.valueOf(UserData.wvw_rank));
+            if(UserData.monthly_ap != -1) {
+                TextView monthlyAP = (TextView) getView().findViewById(R.id.monthly_ap);
+                monthlyAP.setText(String.valueOf(UserData.monthly_ap));
+            }
+            if(UserData.daily_ap != -1) {
+                TextView dailyAp = (TextView) getView().findViewById(R.id.daily_ap);
+                dailyAp.setText(String.valueOf(UserData.daily_ap));
+            }
 
+//            if(UserData.access != null) {
+//                ListView accessList = (ListView) getView().findViewById(R.id.accessContentList);
+//                ArrayList<String> data = new ArrayList<String>(Arrays.asList(UserData.access));
+//                ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, data);
+//               // accessList.setAdapter(adapter);
+//
+//            }
 
-        TextView monthlyAP = (TextView) getView().findViewById(R.id.monthly_ap);
-        monthlyAP.setText(String.valueOf(UserData.monthly_ap));
-
-        TextView dailyAp = (TextView) getView().findViewById(R.id.daily_ap);
-        dailyAp.setText(String.valueOf(UserData.daily_ap));
 
 
     }

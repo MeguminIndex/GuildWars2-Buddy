@@ -7,6 +7,9 @@ package wbeck.guildwars2buddy.Structures;
 public class DailyListItem {
 
     public int id;
+    public String name;
+    public String description;
+    public String requirements;
     public int minLvl;
     public int maxLvl;
 
