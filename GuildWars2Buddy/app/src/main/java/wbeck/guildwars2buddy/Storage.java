@@ -6,9 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Locale;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import static android.content.Context.MODE_APPEND;
@@ -53,6 +55,41 @@ public class Storage {
 
     }
 
+    public static void writeImageFile(File file, Bitmap data, Context context)
+    {
+        FileOutputStream outputStream;
+        File fileStreamPath = file;
+        if(fileStreamPath == null || !fileStreamPath.exists())
+        {
+            try {
+
+               // OutputStream fOutStream = null;
+              //  data.compress(Bitmap.CompressFormat.JPEG,100,fOutStream);
+
+                outputStream = context.openFileOutput(filename,MODE_PRIVATE);
+                outputStream.write(data.getBytes());
+                outputStream.close();
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        else if(fileStreamPath.exists())
+        {
+            try{
+                outputStream = context.openFileOutput(filename, MODE_APPEND);
+                outputStream.write(data.getBytes());
+                outputStream.close();
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+    }
 
     public static String openTxtFile(String filename,Context context)
     {

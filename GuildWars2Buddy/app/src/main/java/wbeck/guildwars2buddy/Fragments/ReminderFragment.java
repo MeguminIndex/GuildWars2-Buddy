@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import wbeck.guildwars2buddy.R;
+import wbeck.guildwars2buddy.Storage;
 import wbeck.guildwars2buddy.UserData;
 import wbeck.guildwars2buddy.addPermissions;
 
@@ -156,15 +165,50 @@ public class ReminderFragment extends Fragment {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ImageView imgPreview = (ImageView) getView().findViewById(R.id.imgPreview);
             imgPreview.setImageBitmap(imageBitmap);
+
+
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            }
+            catch(Exception e)
+            {
+
+            }
+
+            if(photoFile!=null)
+            Storage.writeTxtFile(photoFile.getAbsolutePath(),);
+
         }
     }
 
 
     private void lunchCameraIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //make sure a application can handle this
         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+
+
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    private File createImageFile()
+    {
+        try {
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String fileName = "GW2_Buddy_" + timeStamp;
+
+            File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File image = File.createTempFile(fileName, ".jpg", storageDir);
+
+            return image;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
     }
 
 }
