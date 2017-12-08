@@ -27,6 +27,7 @@ import android.widget.Toast;
 import wbeck.guildwars2buddy.Fragments.AccountFragment;
 import wbeck.guildwars2buddy.Fragments.DailyFragment;
 import wbeck.guildwars2buddy.Fragments.HomeFragment;
+import wbeck.guildwars2buddy.Fragments.ReminderFragment;
 import wbeck.guildwars2buddy.Fragments.SettingsFragment;
 import wbeck.guildwars2buddy.Gw2_API.Gw2AccoutJsonParse;
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     SettingsFragment settingfragment = null;
     DailyFragment dailyFragment = null;
     AccountFragment accountFragment = null;
+    ReminderFragment reminderFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +53,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        UserData.apiKey = userData.getString("key","");
+
         //load defualt fragment page on app startup
         if (savedInstanceState == null)
         {
-             homefragment = new HomeFragment().newInstance("d", "d");
+            homefragment = new HomeFragment().newInstance("d", "d");
             if (homefragment != null) {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -74,29 +79,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
-        UserData.apiKey = userData.getString("key","");
 
 
-
-
-//            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-//            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-//            if (networkInfo != null && networkInfo.isConnected()) {
-//                //  new DownloadImageTask(IM).execute(src);
-//
-//
-//                TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
-//                if(accoutTV != null)
-//                new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
-//
-//            }
-//            else
-//            {
-//                String msg = getResources().getString(R.string.noConnection);
-//                Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
-//
-//            }
 
 
         //Storage.writeTxtFile("test","testData", getApplicationContext());
@@ -268,7 +252,28 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_Reminders) {
 
+            if (reminderFragment != null) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.details, reminderFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else
+            {
 
+
+
+                reminderFragment = new ReminderFragment().newInstance();
+
+                if (reminderFragment != null) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.details, reminderFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
 
 
         } else if (id == R.id.nav_send) {
