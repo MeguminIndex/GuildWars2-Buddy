@@ -177,7 +177,7 @@ public class ReminderFragment extends Fragment {
             }
 
             if(photoFile!=null)
-            Storage.writeTxtFile(photoFile.getAbsolutePath(),);
+            Storage.writeImageFile(photoFile,imageBitmap,getContext());
 
         }
     }
@@ -208,6 +208,8 @@ public class ReminderFragment extends Fragment {
         {
             return null;
         }
+
+
 
     }
 
