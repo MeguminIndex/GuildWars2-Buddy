@@ -26,6 +26,10 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".Services.ReminderService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

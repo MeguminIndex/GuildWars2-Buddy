@@ -34,6 +34,22 @@ public class addPermissions {
     }
 
 
+    public static void externalWritePermission(Activity mainActivity)
+    {
+        ActivityCompat.requestPermissions(mainActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+    }
+
+
+    public static Boolean CheckExternalWritePermission(Context mainActivityContext)
+    {
+        if(ContextCompat.checkSelfPermission(mainActivityContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        {
+           return true;
+        }
+
+        return false;
+    }
+
 
 
 }

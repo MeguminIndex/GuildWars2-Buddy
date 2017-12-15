@@ -2,6 +2,7 @@ package wbeck.guildwars2buddy.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -108,6 +109,17 @@ public class ReminderFragment extends Fragment {
             }
         });
 
+        EditText descView = (EditText) getView().findViewById(R.id.reminderText);
+        ImageView image = (ImageView) getView().findViewById(R.id.imgPreview);
+
+        SharedPreferences reminderData = getContext().getSharedPreferences("reminder", Context.MODE_PRIVATE);
+        descView.setText(reminderData.getString("desc",""));
+        String path = "",fileName ="";
+        path = reminderData.getString("path", "");
+        fileName = reminderData.getString("fileName","");
+
+        image.setImageBitmap(Storage.openmImageFile(path,fileName,getContext()));
+
         //update the apikey box with the apikey
        // EditText edTxt = (EditText) getView().findViewById(R.id.reminderText);
        // edTxt.setText(UserData.apiKey);
@@ -176,9 +188,22 @@ public class ReminderFragment extends Fragment {
 
             }
 
-            if(photoFile!=null)
-            Storage.writeImageFile(photoFile,imageBitmap,getContext());
+            if(photoFile!=null) {
+                if(addPermissions.CheckExternalWritePermission(getContext()) == true) {
 
+                    SaveImageAndPrefrences(photoFile,imageBitmap);
+                }
+                else
+                {
+                    addPermissions.externalWritePermission(getActivity());
+                    if(addPermissions.CheckExternalWritePermission(getContext()) == true) {
+
+                        SaveImageAndPrefrences(photoFile,imageBitmap);
+                    }
+
+
+                }
+            }
         }
     }
 
@@ -191,6 +216,23 @@ public class ReminderFragment extends Fragment {
 
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    private void SaveImageAndPrefrences(File file, Bitmap imageBitmap)
+    {
+        Storage.writeImageFile(file, imageBitmap, getContext());
+
+        EditText descView = (EditText) getView().findViewById(R.id.reminderText);
+        SharedPreferences userData = getContext().getSharedPreferences("reminder", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = userData.edit();
+        editor.putString("desc", descView.getText().toString());
+
+        String path = file.getAbsolutePath().toString();
+         path = path.substring(0,path.lastIndexOf(File.separator));
+
+        editor.putString("path", path);
+        editor.putString("fileName", file.getName().toString());
+        editor.commit();
     }
 
     private File createImageFile()

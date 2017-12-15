@@ -110,28 +110,27 @@ public class Storage {
     }
 
 
-    public static Bitmap openmImageFile(File file,Context context)
+    public static Bitmap openmImageFile(String filePath,String fileName,Context context)
     {
 
         Bitmap thumbnail = null;
-
+        File file= new File(filePath,File.separator +fileName);
         // Look for the file on the external storage
         try {
             if (isExternalReadable() == true) {
-                thumbnail = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+                thumbnail = BitmapFactory.decodeStream(new FileInputStream(file));
             }
         } catch (Exception e) {
-            //Log.e("getThumbnail() on external storage", e.getMessage());
+
         }
 
-        // If no file on external storage, look in internal storage
+
         if (thumbnail == null) {
             try {
-                File filePath = context.getFileStreamPath(file.getName());
-                FileInputStream fi = new FileInputStream(filePath);
-                thumbnail = BitmapFactory.decodeStream(fi);
+
             } catch (Exception ex) {
-              //  Log.e("getThumbnail() on internal storage", ex.getMessage());
+
             }
         }
         return thumbnail;
