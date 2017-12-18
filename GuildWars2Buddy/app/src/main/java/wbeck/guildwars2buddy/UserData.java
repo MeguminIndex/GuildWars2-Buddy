@@ -6,11 +6,11 @@ package wbeck.guildwars2buddy;
 
 public class UserData {
 
-    public static String apiKey ="";
+    public static String apiKey = "";
 
     public static String id = "";
     public static String name = "";
-    public static int world =-1;
+    public static int world = -1;
     public static String world_name = "";
     public static String[] guilds = null;
     public static String[] access = null;

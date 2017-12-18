@@ -41,6 +41,8 @@ import wbeck.guildwars2buddy.addPermissions;
 public class ReminderFragment extends Fragment {
 
 
+    Bitmap reminderImage;
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -106,6 +108,15 @@ public class ReminderFragment extends Fragment {
                 }
 
 
+            }
+        });
+
+
+        Button saveReminderBtn = (Button) getView().findViewById(R.id.saveReminder) ;
+        saveReminderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveReminder();
             }
         });
 
@@ -177,32 +188,11 @@ public class ReminderFragment extends Fragment {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ImageView imgPreview = (ImageView) getView().findViewById(R.id.imgPreview);
             imgPreview.setImageBitmap(imageBitmap);
+            reminderImage = imageBitmap;
 
 
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            }
-            catch(Exception e)
-            {
-
-            }
-
-            if(photoFile!=null) {
-                if(addPermissions.CheckExternalWritePermission(getContext()) == true) {
-
-                    SaveImageAndPrefrences(photoFile,imageBitmap);
-                }
-                else
-                {
-                    addPermissions.externalWritePermission(getActivity());
-                    if(addPermissions.CheckExternalWritePermission(getContext()) == true) {
-
-                        SaveImageAndPrefrences(photoFile,imageBitmap);
-                    }
-
-
-                }
+            if(addPermissions.CheckExternalWritePermission(getContext()) == false) {
+                addPermissions.externalWritePermission(getActivity());
             }
         }
     }
@@ -215,6 +205,37 @@ public class ReminderFragment extends Fragment {
 
 
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+
+    public void SaveReminder()
+    {
+        File photoFile = null;
+        try {
+            if(reminderImage != null)
+            photoFile = createImageFile();
+        }
+        catch(Exception e)
+        {
+
+        }
+
+        if(photoFile!=null) {
+            if(addPermissions.CheckExternalWritePermission(getContext()) == true) {
+
+                SaveImageAndPrefrences(photoFile,reminderImage);
+            }
+            else
+            {
+                addPermissions.externalWritePermission(getActivity());
+                if(addPermissions.CheckExternalWritePermission(getContext()) == true) {
+
+                    SaveImageAndPrefrences(photoFile,reminderImage);
+                }
+
+
+            }
         }
     }
 

@@ -55,7 +55,6 @@ public class Storage {
 
         }
 
-
     }
 
     public static void writeImageFile(File file, Bitmap data, Context context)

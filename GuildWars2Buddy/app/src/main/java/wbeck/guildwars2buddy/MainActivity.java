@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
 
 
             TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
-            if(accoutTV != null && !UserData.apiKey.isEmpty())
+            if(accoutTV != null && UserData.apiKey.isEmpty())
                 new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
 
         }
@@ -295,32 +295,39 @@ public class MainActivity extends AppCompatActivity
     //Settings fragment event handlers
     public void saveApiKey(View view)
     {
-        EditText edTxt = (EditText) findViewById(R.id.apiKeyValue);
-        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = userData.edit();
-        editor.putString("key", edTxt.getText().toString());
-        editor.commit();
-
-        UserData.apiKey = edTxt.getText().toString();
-
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            //  new DownloadImageTask(IM).execute(src);
 
 
-            TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
-            if(accoutTV != null)
-                new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
+        try {
+            EditText edTxt = (EditText) findViewById(R.id.apiKeyValue);
+            UserData.apiKey = edTxt.getText().toString();
+
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                //  new DownloadImageTask(IM).execute(src);
 
 
+                TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
+                if (accoutTV != null)
+                    new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
+
+
+            } else {
+                String msg = getResources().getString(R.string.noConnection);
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+
+            }
+
+
+            SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = userData.edit();
+            editor.putString("key",  UserData.apiKey);
+            editor.commit();
 
 
         }
-        else
+        catch(Exception e)
         {
-            String msg = getResources().getString(R.string.noConnection);
-            Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
 
         }
 

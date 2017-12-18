@@ -41,26 +41,42 @@ public class Gw2AccoutJsonParse extends AsyncTask<String, String, String>{
             //HttpURLConnection con = (HttpsURLConnection) new URL(apiCall+authPrefix+UserData.apiKey)
               //      .openConnection();
 
+
+
             httpConnect jParser = new httpConnect();
+            try{
+            String authCheck = jParser.getJSONFromUrl("https://api.guildwars2.com/v2/tokeninfo"+authPrefix + UserData.apiKey);
+             if(authCheck != null) {
+                 JSONObject authCheckOBJ = new JSONObject(authCheck);
+                //could check what permissions the key has
+
+             }
+            }
+            catch(Exception e)
+            {
+
+            }
+
             String json = jParser.getJSONFromUrl(apiCall+authPrefix+ UserData.apiKey);
+            if(json != null) {
+                JSONObject accout = new JSONObject(json);
 
-            JSONObject accout = new JSONObject(json);
+                UserData.id = accout.getString("id");
+                UserData.name = accout.getString("name");
+                UserData.world = accout.getInt("world");
 
-            UserData.id = accout.getString("id");
-            UserData.name = accout.getString("name");
-            UserData.world = accout.getInt("world");
+                JSONArray jaccessArray;
+                jaccessArray = accout.getJSONArray("guilds");
+                UserData.guilds = JsonArrayToStringArray(jaccessArray);
 
-            JSONArray jaccessArray;
-            jaccessArray = accout.getJSONArray("guilds");
-            UserData.guilds = JsonArrayToStringArray(jaccessArray);
+                jaccessArray = accout.getJSONArray("access");
+                UserData.access = JsonArrayToStringArray(jaccessArray);
 
-            jaccessArray = accout.getJSONArray("access");
-            UserData.access = JsonArrayToStringArray(jaccessArray);
-
-            UserData.fractal_level = accout.getInt("fractal_level");
-            UserData.daily_ap = accout.getInt("daily_ap");
-            UserData.monthly_ap = accout.getInt("monthly_ap");
-            UserData.wvw_rank = accout.getInt("wvw_rank");
+                UserData.fractal_level = accout.getInt("fractal_level");
+                UserData.daily_ap = accout.getInt("daily_ap");
+                UserData.monthly_ap = accout.getInt("monthly_ap");
+                UserData.wvw_rank = accout.getInt("wvw_rank");
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -80,6 +96,8 @@ public class Gw2AccoutJsonParse extends AsyncTask<String, String, String>{
     }
 
     protected void onPostExecute(String result) {
+
+        if(!UserData.name.isEmpty())
         textView.setText(UserData.name.toString());
     }
 

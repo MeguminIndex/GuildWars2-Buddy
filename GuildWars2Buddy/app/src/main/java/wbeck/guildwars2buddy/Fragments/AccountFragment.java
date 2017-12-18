@@ -101,11 +101,11 @@ public class AccountFragment extends Fragment {
             accountname.setText(UserData.name);
         }
         TextView world = (TextView) getView().findViewById(R.id.account_world);
-        if(UserData.world_name.isEmpty()) {
+        if(!UserData.world_name.isEmpty()) {
 
             ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()) {
+            if (networkInfo != null && networkInfo.isConnected() && UserData.world != -1) {
                 new Gw2WorldJsonParse(world).execute("https://api.guildwars2.com/v2/worlds/" + String.valueOf(UserData.world));
             }
 
