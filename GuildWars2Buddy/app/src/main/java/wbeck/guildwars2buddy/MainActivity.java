@@ -78,18 +78,6 @@ public class MainActivity extends AppCompatActivity
          NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-
-
-
-        //Storage.writeTxtFile("test","testData", getApplicationContext());
-
-        //String temp;
-
-        //temp = Storage.openTxtFile("test",getApplicationContext());
-
-
     }
 
 
@@ -116,13 +104,9 @@ public class MainActivity extends AppCompatActivity
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            //  new DownloadImageTask(IM).execute(src);
-
-
             TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
             if(accoutTV != null && UserData.apiKey.isEmpty())
                 new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
-
         }
         else
         {
@@ -306,24 +290,19 @@ public class MainActivity extends AppCompatActivity
             if (networkInfo != null && networkInfo.isConnected()) {
                 //  new DownloadImageTask(IM).execute(src);
 
-
                 TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
                 if (accoutTV != null)
                     new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
 
-
             } else {
                 String msg = getResources().getString(R.string.noConnection);
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-
             }
-
 
             SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = userData.edit();
             editor.putString("key",  UserData.apiKey);
             editor.commit();
-
 
         }
         catch(Exception e)

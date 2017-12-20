@@ -60,8 +60,8 @@ public class Storage {
     public static void writeImageFile(File file, Bitmap data, Context context)
     {
 
-        File fileStreamPath = file;
-        if(fileStreamPath.exists())
+        //File fileStreamPath = file;
+        if(file.exists())
         {
             try{
                 OutputStream fOutStream = new FileOutputStream(file);
@@ -73,7 +73,7 @@ public class Storage {
                 fOutStream.flush();
                 fOutStream.close();
 
-                MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+               // MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), "reminder image for GW2 Buddy");
             }
             catch(Exception e) {
                 e.printStackTrace();

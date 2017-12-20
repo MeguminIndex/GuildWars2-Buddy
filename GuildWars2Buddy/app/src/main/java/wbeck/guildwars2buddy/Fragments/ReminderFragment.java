@@ -211,6 +211,7 @@ public class ReminderFragment extends Fragment {
 
     public void SaveReminder()
     {
+
         File photoFile = null;
         try {
             if(reminderImage != null)
@@ -241,18 +242,25 @@ public class ReminderFragment extends Fragment {
 
     private void SaveImageAndPrefrences(File file, Bitmap imageBitmap)
     {
-        Storage.writeImageFile(file, imageBitmap, getContext());
-
         EditText descView = (EditText) getView().findViewById(R.id.reminderText);
+
         SharedPreferences userData = getContext().getSharedPreferences("reminder", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = userData.edit();
         editor.putString("desc", descView.getText().toString());
 
-        String path = file.getAbsolutePath().toString();
-         path = path.substring(0,path.lastIndexOf(File.separator));
+        if(reminderImage != null) {
+            Storage.writeImageFile(file, imageBitmap, getContext());
+            String path = file.getAbsolutePath().toString();
+            path = path.substring(0,path.lastIndexOf(File.separator));
 
-        editor.putString("path", path);
-        editor.putString("fileName", file.getName().toString());
+            editor.putString("path", path);
+            editor.putString("fileName", file.getName().toString());
+
+
+            reminderImage = null;
+        }
+
+
         editor.commit();
     }
 
