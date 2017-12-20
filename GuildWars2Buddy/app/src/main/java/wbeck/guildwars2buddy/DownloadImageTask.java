@@ -7,9 +7,6 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.InputStream;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Index on 23/10/2017.
@@ -17,35 +14,27 @@ import javax.net.ssl.HttpsURLConnection;
 
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
+    ImageView imageV;
 
     public DownloadImageTask(ImageView imageview) {
-        bmImage = imageview;
+        imageV = imageview;
     }
 
     protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
+        Bitmap bitM = null;
         try {
             InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
-
-           /* URL url = new URL(urldisplay);
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            mIcon11 = BitmapFactory.decodeStream(input);*/
-
+            bitM = BitmapFactory.decodeStream(in);
 
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
-        return mIcon11;
+        return bitM;
     }
 
     protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
+        imageV.setImageBitmap(result);
     }
 }
