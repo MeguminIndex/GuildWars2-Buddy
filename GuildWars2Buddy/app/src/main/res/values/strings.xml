@@ -16,6 +16,8 @@
     <!-- Navigation Drawer -->
     <string name="username">Username#7623</string>
 
+    <!-- Home Fragment Strings -->
+    <string name="welcome_msg">Welcome to GuildWars 2 Buddy please head over to the Settings menu to input your API key \n\n Swipe Right to open the navigation drawer</string>
 
     <!-- Settings Fragment Strings -->
     <string name="apikey">Api-Key Here</string>

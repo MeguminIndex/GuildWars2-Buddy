@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
         UserData.apiKey = userData.getString("key","");
 
+        String apio= UserData.apiKey;
+
         //load defualt fragment page on app startup
         if (savedInstanceState == null)
         {
@@ -69,6 +71,10 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+
+
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -77,6 +83,8 @@ public class MainActivity extends AppCompatActivity
 
          NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
     }
 
@@ -105,14 +113,12 @@ public class MainActivity extends AppCompatActivity
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
-            if(accoutTV != null && UserData.apiKey.isEmpty())
+            if (accoutTV != null)
                 new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");
-        }
-        else
-        {
-            String msg = getResources().getString(R.string.noConnection);
-            Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
 
+        } else {
+            String msg = getResources().getString(R.string.noConnection);
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
         }
 
         return true;
@@ -127,7 +133,28 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            if (settingfragment != null) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.details, settingfragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+            else
+            {
+
+
+
+                settingfragment = new SettingsFragment().newInstance("d", "d");
+
+                if (settingfragment != null) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.details, settingfragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -288,8 +315,6 @@ public class MainActivity extends AppCompatActivity
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                //  new DownloadImageTask(IM).execute(src);
-
                 TextView accoutTV = (TextView) findViewById(R.id.AccoutName);
                 if (accoutTV != null)
                     new Gw2AccoutJsonParse(accoutTV).execute("https://api.guildwars2.com/v2/account");

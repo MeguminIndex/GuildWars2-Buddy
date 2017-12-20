@@ -112,6 +112,9 @@ public class ReminderFragment extends Fragment {
         });
 
 
+
+
+
         Button saveReminderBtn = (Button) getView().findViewById(R.id.saveReminder) ;
         saveReminderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +122,27 @@ public class ReminderFragment extends Fragment {
                 SaveReminder();
             }
         });
+
+        Button removeImgBtn = (Button) getView().findViewById(R.id.removeImg) ;
+        removeImgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reminderImage = null;
+
+                SharedPreferences userData = getContext().getSharedPreferences("reminder", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = userData.edit();
+                editor.putString("desc", "");
+                editor.putString("path", "");
+                editor.putString("fileName", "");
+                editor.commit();
+
+
+                ImageView image = (ImageView) getView().findViewById(R.id.imgPreview);
+                image.setImageBitmap(reminderImage);
+            }
+        });
+
+
 
         EditText descView = (EditText) getView().findViewById(R.id.reminderText);
         ImageView image = (ImageView) getView().findViewById(R.id.imgPreview);

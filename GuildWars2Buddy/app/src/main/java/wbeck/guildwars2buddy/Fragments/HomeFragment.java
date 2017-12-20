@@ -4,11 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.EditText;
 
 import wbeck.guildwars2buddy.R;
+import wbeck.guildwars2buddy.UserData;
 
 
 /**
@@ -53,6 +57,9 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +82,18 @@ public class HomeFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+        WebView webView = (WebView) getView().findViewById(R.id.homeWebVIew);
+        webView.loadUrl("https://en-forum.guildwars2.com/categories/news-and-announcements");
+
+    }
+
+
 
     @Override
     public void onAttach(Context context) {
